@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operación GÉNESIS: Tipologías y Géneros Discursivos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ==================== VARIABLES Y RESET ==================== */
+        :root {
+            --bg-deep: #0a0a0f;
+            --bg-card: #13141c;
+            --neon-blue: #00f0ff;
+            --neon-pink: #ff0055;
+            --neon-purple: #8a2be2;
+            --neon-green: #00ff88;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(0, 240, 255, 0.2);
+            --font-sans: 'Outfit', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 0, 85, 0.05), transparent 25%);
+        }
+
+        /* ==================== NAVEGACIÓN Y HEADER ==================== */
+        header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(to bottom, rgba(10,10,15,0.9), rgba(19,20,28,0.9));
+            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            gap: 10px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--neon-blue);
+            border-color: rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.05);
+            box-shadow: 0 0 10px rgba(0,240,255,0.1);
+        }
+
+        nav a.active {
+            color: #fff;
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        /* ==================== CONTENEDOR Y SECCIONES ==================== */
+        .container { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; min-height: 60vh; }
+
+        section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-size: 2.2rem; color: #fff; margin-bottom: 1.5rem; border-bottom: 2px solid var(--neon-purple); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.5rem; color: var(--neon-blue); margin: 2.5rem 0 1rem 0; }
+        
+        /* ==================== ELEMENTOS DE TEXTO ==================== */
+        .theory-box {
+            background: rgba(255,255,255,0.02);
+            border-left: 4px solid var(--neon-blue);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .theory-box ul { margin-left: 1.5rem; margin-top: 1rem; margin-bottom: 1rem; }
+        .theory-box li { margin-bottom: 0.8rem; }
+        .highlight { color: var(--neon-blue); font-weight: 600; }
+        .highlight-pink { color: var(--neon-pink); font-weight: 600; }
+
+        .text-analysis-box {
+            background: #000;
+            border: 1px solid #333;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .text-analysis-box::before {
+            content: "DATOS INTERCEPTADOS";
+            position: absolute;
+            top: -12px; left: 20px;
+            background: var(--neon-purple);
+            color: white;
+            font-size: 0.8rem; font-family: var(--font-mono);
+            padding: 2px 10px; border-radius: 4px;
+        }
+
+        .blockquote-style {
+            border-left: 3px solid var(--neon-pink);
+            padding-left: 1.5rem;
+            font-family: var(--font-mono);
+            color: #cbd5e1;
+            background: rgba(255, 0, 85, 0.05);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        /* ==================== ZONA DE RETOS ==================== */
+        .challenge-zone {
+            background: rgba(0, 255, 136, 0.03);
+            border: 1px dashed var(--neon-green);
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .challenge-zone::before {
+            content: "MISIÓN DE CAMPO (EN EL CUADERNO)";
+            position: absolute;
+            top: -12px; left: 20px;
+            background: var(--neon-green);
+            color: #000;
+            padding: 3px 12px; font-weight: 800;
+            font-size: 0.85rem; border-radius: 4px; letter-spacing: 1px;
+        }
+
+        .task-list { margin-left: 1.5rem; color: #e2e8f0; }
+        .task-list li { margin-bottom: 1.2rem; }
+
+        /* ==================== INTERACTIVOS ==================== */
+        .btn-interactive {
+            background: transparent;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 10px 20px;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+            margin: 5px;
+        }
+        .btn-interactive:hover {
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        .match-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;
+        }
+        .draggable-item {
+            background: rgba(255,255,255,0.05); padding: 15px; border: 1px solid #444; border-radius: 6px; cursor: pointer; transition: 0.2s;
+        }
+        .draggable-item:hover { border-color: var(--neon-purple); background: rgba(138, 43, 226, 0.1); }
+        .draggable-item.selected { border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(255,0,85,0.4); }
+        .draggable-item.matched { border-color: var(--neon-green); color: var(--neon-green); opacity: 0.7; pointer-events: none; }
+
+        /* ==================== QUIZ ==================== */
+        .quiz-container { background: #000; padding: 3rem; border-radius: 12px; border: 1px solid #333; }
+        .question-text { font-size: 1.4rem; margin-bottom: 2rem; color: #fff; font-weight: 600; }
+        .option-btn {
+            display: block; width: 100%; background: #13141c; color: var(--text-main);
+            border: 1px solid #333; padding: 1rem; margin-bottom: 1rem;
+            border-radius: 6px; cursor: pointer; text-align: left; font-size: 1.05rem; transition: 0.3s;
+        }
+        .option-btn:hover { border-color: var(--neon-blue); background: rgba(0,240,255,0.05); }
+        .option-btn.correct { background: rgba(0,255,136,0.2); border-color: var(--neon-green); color: #fff; }
+        .option-btn.wrong { background: rgba(255,0,85,0.2); border-color: var(--neon-pink); color: #fff; }
+        .feedback { margin-top: 1.5rem; padding: 1.5rem; border-radius: 6px; display: none; background: #13141c; border-left: 4px solid; }
+        .next-btn {
+            background: var(--neon-purple); color: white; border: none; padding: 1rem 2rem;
+            font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer;
+            margin-top: 2rem; display: none; width: 100%; letter-spacing: 1px;
+        }
+        .next-btn:hover { box-shadow: 0 0 20px var(--neon-purple); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Red GÉNESIS</h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted); font-family: var(--font-mono);">
+            > Módulo Interactivo: Propiedades Textuales y Géneros Discursivos
+        </p>
+    </header>
+
+    <nav id="main-nav">
+        <a href="#propiedades" class="active">1. Propiedades y Funciones</a>
+        <a href="#educativo">2. Ámbito Educativo (Académicos)</a>
+        <a href="#social">3. Ámbito Social y Digital</a>
+        <a href="#quiz">4. Simulador de Evaluación</a>
+    </nav>
+
+    <div class="container">
+        
+        <!-- ==================== SECCIÓN 1 ==================== -->
+        <section id="propiedades" class="active">
+            <h2>1. El ADN del Texto: Propiedades, Funciones y Modalidades</h2>
+            
+            <p>Un texto no es una simple suma de frases soltadas al azar. La palabra "texto" proviene del latín <em>textus</em>, que significa "tejido". Para que ese tejido no se rompa y tenga sentido completo, debe cumplir tres propiedades fundamentales.</p>
+
+            <h3>1.1. Las Tres Propiedades Textuales</h3>
+            <div class="theory-box">
+                <ul>
+                    <li><span class="highlight">La Coherencia:</span> Es el hilo conductor, el significado global. Un texto es coherente si tiene un tema claro, la información avanza sin contradecirse (coherencia lineal) y sus enunciados tienen sentido entre sí (coherencia local). <em>(Ej. de incoherencia: "Me encanta el helado de fresa. La revolución francesa fue en 1789.")</em></li>
+                    <li><span class="highlight">La Cohesión:</span> Es el pegamento gramatical. Son los mecanismos lingüísticos que unen las frases: los conectores (<em>sin embargo, por lo tanto</em>), los pronombres para no repetir (anáforas) y los sinónimos.</li>
+                    <li><span class="highlight">La Adecuación:</span> Es el "traje a medida". Consiste en adaptar el texto a la situación comunicativa: elegir el registro correcto (formal/coloquial), tener en cuenta al receptor y cumplir el propósito (informar, convencer, quejarse).</li>
+                </ul>
+            </div>
+
+            <h3>1.2. Las Funciones del Lenguaje (Roman Jakobson)</h3>
+            <p>Cuando hablamos, siempre tenemos un propósito. Dependiendo de en qué elemento de la comunicación nos centremos, predomina una función:</p>
+            <div class="theory-box">
+                <ul>
+                    <li><strong>Representativa o Referencial:</strong> Se centra en el Contexto/Realidad. Informa objetivamente. <em>(Ej: "Son las cinco en punto.")</em></li>
+                    <li><strong>Expresiva o Emotiva:</strong> Se centra en el Emisor. Expresa sentimientos u opiniones. <em>(Ej: "¡Qué alegría verte!")</em></li>
+                    <li><strong>Apelativa o Conativa:</strong> Se centra en el Receptor. Busca convencer o dar órdenes. <em>(Ej: "Cierra la puerta, por favor.")</em></li>
+                    <li><strong>Fática o de Contacto:</strong> Se centra en el Canal. Asegura que la comunicación funciona. <em>(Ej: "Hola, ¿me oyes bien?")</em></li>
+                    <li><strong>Metalingüística:</strong> Se centra en el Código. Usa la lengua para hablar de la propia lengua. <em>(Ej: "Hacer se escribe con hache.")</em></li>
+                    <li><strong>Poética o Estética:</strong> Se centra en el Mensaje. Busca la belleza y llamar la atención sobre la forma. <em>(Ej: "En el corazón tenía la espina de una pasión.")</em></li>
+                </ul>
+            </div>
+
+            <h3>1.3. Modalidades Textuales</h3>
+            <p>Es la "forma o molde" que usamos para organizar la información en un texto. Casi siempre se mezclan, pero una suele predominar:</p>
+            <div class="theory-box" style="border-color: var(--neon-purple);">
+                <p><strong>Narración</strong> (contar sucesos en el tiempo), <strong>Descripción</strong> (decir cómo es algo/alguien), <strong>Exposición</strong> (explicar un tema de forma clara y objetiva), <strong>Argumentación</strong> (defender una idea o tesis con razones) y <strong>Diálogo</strong> (intercambio verbal).</p>
+            </div>
+
+            <div class="challenge-zone">
+                <h4>Retos de Análisis Textual</h4>
+                <ol class="task-list">
+                    <li><strong>Diagnóstico de Incoherencia:</strong> Escribe en tu cuaderno por qué el siguiente texto falla en sus propiedades: <em>"Ayer fui al cine a ver una de terror. El ecosistema marino está sufriendo mucho. Por lo tanto, me compré unas palomitas grandes. Usted debe tener cuidado, tronco."</em> Localiza los fallos de coherencia, cohesión (mal uso del conector) y adecuación (mezcla de registros).</li>
+                    <li><strong>Detector de Funciones:</strong> Clasifica en tu cuaderno qué función del lenguaje predomina en: a) Una receta de cocina. b) Un poema de amor. c) El diccionario de la RAE. d) Un telediario.</li>
+                    <li><strong>Transmutación de Modalidad:</strong> Describe tu instituto en 3 líneas (modalidad descriptiva). Luego, transforma ese texto en una narración contando qué pasó ayer a la hora del recreo (modalidad narrativa).</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ==================== SECCIÓN 2 ==================== -->
+        <section id="educativo">
+            <h2>2. Ámbito Educativo: Textos Académicos y el Ensayo</h2>
+            
+            <p>En el ámbito educativo y de investigación no podemos escribir de cualquier forma. Necesitamos precisión y rigor. Existen dos grandes bloques de textos académicos: los científicos (Ciencias de la Naturaleza y Exactas) y los humanísticos (Ciencias Sociales, Filosofía, Literatura).</p>
+
+            <h3>2.1. El Texto Científico</h3>
+            <div class="theory-box">
+                <p>Su propósito es demostrar la verdad sobre el mundo físico. Sus características son innegociables:</p>
+                <ul>
+                    <li><span class="highlight">Objetividad absoluta:</span> No importa lo que el científico "sienta", sino los datos. Se oculta al emisor usando oraciones impersonales y pasivas reflejas (<em>"Se observó la reacción...", "Se analizan los datos..."</em>).</li>
+                    <li><span class="highlight">Precisión y Claridad:</span> No hay doble sentido ni metáforas (función representativa).</li>
+                    <li><span class="highlight">Tecnicismos:</span> Uso de vocabulario especializado, universal y unívoco (monosémico). Ej: <em>mitocondria, algoritmo, isótopo</em>.</li>
+                </ul>
+            </div>
+
+            <h3>2.2. El Texto Humanístico y el Ensayo</h3>
+            <div class="theory-box" style="border-color: var(--neon-pink);">
+                <p>Estudia al ser humano, sus ideas, su sociedad y su cultura. A diferencia de la ciencia exacta, aquí sí caben la interpretación y el debate (predomina la argumentación y la exposición).</p>
+                <ul>
+                    <li><span class="highlight-pink">Subjetividad argumentada:</span> El autor opina e interpreta la realidad, pero debe basar sus opiniones en datos y razonamientos lógicos.</li>
+                    <li><span class="highlight-pink">Abstracción:</span> Uso frecuente de sustantivos abstractos (<em>libertad, ética, belleza, democracia</em>).</li>
+                </ul>
+                <p style="margin-top:15px; font-weight:bold;">El Ensayo:</p>
+                <p>Es el género humanístico por excelencia. Es un texto escrito en prosa donde un autor desarrolla sus ideas sobre un tema con un estilo cuidado (voluntad de estilo), sin necesidad de ser un tratado exhaustivo, sino invitando al lector a la reflexión.</p>
+            </div>
+
+            <div class="text-analysis-box">
+                <div class="blockquote-style">
+                    <strong>Archivo C-01 (Texto Científico):</strong><br>
+                    "El ácido desoxirribonucleico (ADN) es un ácido nucleico que contiene las instrucciones genéticas usadas en el desarrollo y funcionamiento de todos los organismos vivos. Se compone de dos cadenas que se enrollan formando una doble hélice."
+                </div>
+                <div class="blockquote-style" style="border-color: var(--neon-purple); background: rgba(138, 43, 226, 0.05);">
+                    <strong>Archivo H-02 (Texto Humanístico / Ensayo):</strong><br>
+                    "Vivimos en una sociedad líquida, donde la inmediatez ha devorado nuestro sentido de la permanencia. ¿Qué es hoy la identidad? Quizás solo un espejismo en la pantalla de nuestros teléfonos, una suma de algoritmos que nos aleja irremediablemente del verdadero autoconocimiento."
+                </div>
+            </div>
+
+            <div class="challenge-zone">
+                <h4>Retos de Análisis de Ámbito</h4>
+                <ol class="task-list">
+                    <li><strong>Anatomía Forense:</strong> Lee los Archivos C-01 y H-02. Extrae en tu cuaderno dos "tecnicismos" del texto científico y dos "sustantivos abstractos" del texto humanístico.</li>
+                    <li><strong>El factor impersonal:</strong> Copia la oración científica <em>"Se compone de dos cadenas que se enrollan"</em> e identifica qué tipo de estructura sintáctica se usa para borrar a la persona que realiza la acción (pista: fíjate en el pronombre "se").</li>
+                    <li><strong>El Pequeño Ensayista:</strong> Escribe un micro-ensayo (10 líneas) sobre "El impacto de la Inteligencia Artificial en la educación". Debes mezclar exposición (explicar qué es) y argumentación (tu opinión justificada).</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ==================== SECCIÓN 3 ==================== -->
+        <section id="social">
+            <h2>3. Ámbito Social: Periodismo, Publicidad y la Red</h2>
+            
+            <p>Fuera de las aulas, nuestro día a día está bombardeado por los medios de comunicación y el ciberespacio. Su propósito principal es informar, persuadir o entretener, llegando a audiencias masivas.</p>
+
+            <h3>3.1. Los Géneros Periodísticos</h3>
+            <p>No todo lo que sale en un periódico es "una noticia". Los textos se dividen en tres grandes géneros según su grado de objetividad:</p>
+            <div class="theory-box">
+                <ul>
+                    <li><span class="highlight">Géneros de Información:</span> Su objetivo es contar los hechos de forma 100% objetiva (Función representativa).
+                        <ul>
+                            <li><strong>La Noticia:</strong> Breve, actual, responde a las 6W (Qué, quién, cuándo, dónde, cómo, por qué). Estructura de pirámide invertida (lo más importante va al principio en el titular y la entradilla).</li>
+                            <li><strong>El Reportaje objetivo:</strong> Más largo y profundo que la noticia, requiere investigación detallada.</li>
+                        </ul>
+                    </li>
+                    <li><span class="highlight">Géneros de Opinión:</span> El autor valora, juzga y opina sobre la actualidad (subjetividad, argumentación).
+                        <ul>
+                            <li><strong>El Editorial:</strong> Artículo sin firma que representa la opinión institucional de todo el periódico.</li>
+                            <li><strong>El Artículo de opinión / Columna:</strong> Un autor concreto (a menudo un escritor famoso) da su visión personal sobre un tema. Usa la primera persona y un estilo literario.</li>
+                        </ul>
+                    </li>
+                    <li><span class="highlight">Géneros Mixtos:</span> Mezclan información objetiva y valoración personal.
+                        <ul>
+                            <li><strong>La Crónica:</strong> Narra un suceso en orden cronológico e incluye la valoración del periodista que estuvo allí (ej. Crónica deportiva de un partido de fútbol).</li>
+                            <li><strong>La Entrevista:</strong> Diálogo entre periodista y personaje.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: 40px;">3.2. Publicidad y El Español en la Red</h3>
+            <div class="theory-box" style="border-color: var(--neon-pink);">
+                <p><strong>La Publicidad:</strong> Su función absoluta es la <em>Apelativa</em> (quiere que compres o actúes). Utiliza un canal audiovisual o impreso, creando eslóganes pegadizos (función poética) e imágenes que a menudo juegan con estereotipos sociales para persuadir rápidamente.</p>
+                <p style="margin-top: 10px;"><strong>El español y las Nuevas Tecnologías:</strong> Internet ha creado géneros discursivos nuevos (el hilo de Twitter/X, el post de Instagram, el chat de WhatsApp). Sus rasgos son:</p>
+                <ul>
+                    <li><em>Hipertextualidad:</em> Uso de enlaces (links) que rompen la lectura lineal tradicional.</li>
+                    <li><em>Multimodalidad:</em> El texto escrito se mezcla con vídeos, audios, emojis y memes.</li>
+                    <li><em>Neologismos y extranjerismos:</em> Invasión de términos tecnológicos (spoiler, stalkear, influencer, hater, postear).</li>
+                    <li><em>Inmediatez y economía:</em> Textos cortos, rápidos, a menudo relajando las normas ortográficas.</li>
+                </ul>
+            </div>
+
+            <!-- JUEGO DE EMPAREJAMIENTO PERIODÍSTICO -->
+            <div style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 8px; margin-top: 30px; border: 1px solid var(--neon-blue);">
+                <h4 style="color: var(--neon-blue); font-family: var(--font-mono); margin-bottom: 10px;">> Terminal Interactiva: Clasificador de Géneros Periodísticos</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Selecciona un Titular/Descripción y haz clic en su Género correspondiente para emparejarlos.</p>
+                <div class="match-grid" id="match-game">
+                    <!-- JS inyectará los botones aquí -->
+                </div>
+            </div>
+
+            <div class="challenge-zone">
+                <h4>Retos de Análisis Mediático</h4>
+                <ol class="task-list">
+                    <li><strong>De Noticia a Columna:</strong> Lee este titular de noticia: <em>"El Ayuntamiento prohíbe el uso de patinetes eléctricos en el casco histórico a partir de mañana."</em> Escribe en tu cuaderno el inicio (5 líneas) de un <em>Artículo de Opinión</em> sobre este mismo tema. Recuerda usar la primera persona, subjetividad y argumentación (a favor o en contra).</li>
+                    <li><strong>Anatomía del Clickbait:</strong> Las redes sociales usan el "clickbait" (ciberanzuelo) para generar curiosidad morbosa. Inventa dos titulares sensacionalistas y exagerados para noticias que en realidad son muy aburridas.</li>
+                    <li><strong>Glosario de la Red:</strong> Haz una lista de 5 neologismos o extranjerismos que uses a diario en tus redes sociales y dales una definición formal en español como si fueras la RAE.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ==================== SECCIÓN 4 (QUIZ) ==================== -->
+        <section id="quiz">
+            <h2>4. Simulador de Evaluación Táctica</h2>
+            <p style="margin-bottom: 2rem;">Demuestra tu dominio sobre las propiedades, los géneros y el hecho comunicativo. Selecciona la opción correcta en cada fase.</p>
+
+            <div class="quiz-container">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 1rem; font-family: var(--font-mono);">
+                    <span style="color: var(--neon-purple);">NIVEL DE SINCRONIZACIÓN</span>
+                    <span style="color: var(--neon-blue);">RETO <span id="q-curr">1</span> / <span id="q-total">10</span></span>
+                </div>
+                
+                <div class="question-text" id="quiz-question">Iniciando sistema...</div>
+                <div id="quiz-options"></div>
+                <div class="feedback" id="quiz-feedback"></div>
+                
+                <button class="next-btn" id="quiz-next">Siguiente Protocolo ></button>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p style="font-size: 1.1rem; color: white; letter-spacing: 1px;"><strong>Departamento de Lengua Castellana y Literatura | IES San José de la Rinconada | 2026</strong></p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--text-muted);">Módulo de alto rendimiento adaptado a los saberes básicos de 1º de Bachillerato (LOMLOE Andalucía) - Bloque C.</p>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // --- 1. LÓGICA DE NAVEGACIÓN SPA ---
+        const navLinks = document.querySelectorAll('#main-nav a');
+        const sections = document.querySelectorAll('section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Quitar activaciones
+                sections.forEach(sec => sec.classList.remove('active'));
+                navLinks.forEach(l => l.classList.remove('active'));
+                
+                // Activar clickado
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).classList.add('active');
+                this.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // --- 2. JUEGO DE EMPAREJAMIENTO (PERIODISMO) ---
+        const matchTerms = [
+            { id: 1, text: "Narra un suceso al que el periodista ha asistido, pero incluyendo sus opiniones y valoraciones personales." },
+            { id: 2, text: "Artículo sin firma que expresa la postura ideológica u oficial de la empresa del periódico ante un tema de actualidad." },
+            { id: 3, text: "Relato objetivo, breve y directo de un acontecimiento actual, respondiendo a las 6W." },
+            { id: 4, text: "Texto escrito por una firma prestigiosa o experto que reflexiona y da su visión muy subjetiva sobre un tema." }
+        ];
+        
+        const matchAnswers = [
+            { id: 1, text: "Crónica (Mixto)" },
+            { id: 2, text: "Editorial (Opinión)" },
+            { id: 3, text: "Noticia (Información)" },
+            { id: 4, text: "Artículo/Columna (Opinión)" }
+        ];
+
+        let selectedBox = null;
+        
+        function initMatchGame() {
+            const grid = document.getElementById('match-game');
+            if(!grid) return;
+            
+            // Mezclar
+            const shuffledTerms = [...matchTerms].sort(() => Math.random() - 0.5);
+            const shuffledAnswers = [...matchAnswers].sort(() => Math.random() - 0.5);
+            
+            const col1 = document.createElement('div');
+            const col2 = document.createElement('div');
+            
+            shuffledTerms.forEach(t => {
+                let div = document.createElement('div');
+                div.className = 'draggable-item'; div.style.marginBottom = '10px';
+                div.innerText = t.text;
+                div.dataset.id = t.id;
+                div.onclick = () => handleMatchClick(div);
+                col1.appendChild(div);
+            });
+            
+            shuffledAnswers.forEach(a => {
+                let div = document.createElement('div');
+                div.className = 'draggable-item'; div.style.marginBottom = '10px';
+                div.innerText = a.text;
+                div.dataset.id = a.id;
+                div.onclick = () => handleMatchClick(div);
+                col2.appendChild(div);
+            });
+            
+            grid.appendChild(col1); grid.appendChild(col2);
+        }
+
+        function handleMatchClick(el) {
+            if(el.classList.contains('matched')) return;
+            
+            if(!selectedBox) {
+                // Seleccionar primero
+                selectedBox = el;
+                el.classList.add('selected');
+            } else {
+                // Si hace click en el mismo, deseleccionar
+                if(selectedBox === el) {
+                    el.classList.remove('selected');
+                    selectedBox = null;
+                    return;
+                }
+                
+                // Si hace click en otro del mismo lado (columna), cambiar selección
+                if(selectedBox.parentNode === el.parentNode) {
+                    selectedBox.classList.remove('selected');
+                    selectedBox = el;
+                    el.classList.add('selected');
+                    return;
+                }
+                
+                // Comprobar match
+                if(selectedBox.dataset.id === el.dataset.id) {
+                    selectedBox.classList.remove('selected');
+                    selectedBox.classList.add('matched');
+                    el.classList.add('matched');
+                    selectedBox.innerText += " ✅";
+                    el.innerText += " ✅";
+                    selectedBox = null;
+                } else {
+                    // Error
+                    el.style.borderColor = "var(--neon-pink)";
+                    selectedBox.style.borderColor = "var(--neon-pink)";
+                    setTimeout(() => {
+                        if(!el.classList.contains('selected')) el.style.borderColor = "#444";
+                        if(!selectedBox.classList.contains('matched')) selectedBox.style.borderColor = "var(--neon-pink)"; // keep selected color
+                        selectedBox.classList.remove('selected');
+                        el.classList.remove('selected');
+                        selectedBox = null;
+                    }, 500);
+                }
+            }
+        }
+
+        // --- 3. LÓGICA DEL QUIZ ---
+        const quizData = [
+            {
+                q: "El mecanismo lingüístico que permite que las diferentes partes de un texto estén gramaticalmente conectadas (mediante el uso de sinónimos, anáforas y conectores) se denomina:",
+                options: ["Adecuación", "Cohesión", "Coherencia Lineal", "Modalidad Expositiva"],
+                correct: 1,
+                exp: "La cohesión es el conjunto de mecanismos sintácticos y léxicos que articulan y 'pegan' las frases entre sí."
+            },
+            {
+                q: "Un texto que utiliza de forma abundante verbos en pasiva refleja ('Se analizan las muestras') y vocabulario monosémico (tecnicismos), ocultando al emisor para ser objetivo, pertenece al ámbito:",
+                options: ["Científico", "Humanístico", "Periodístico de Opinión", "Publicitario"],
+                correct: 0,
+                exp: "El texto científico exige objetividad extrema y claridad universal mediante tecnicismos."
+            },
+            {
+                q: "El Ensayo es el subgénero estrella de los textos humanísticos. Su característica principal es:",
+                options: ["Proporcionar datos exactos y matemáticos comprobables en laboratorio.", "Informar brevemente sobre la actualidad mediante la regla de las 6W.", "Reflexionar y argumentar de forma subjetiva y cuidadosa (voluntad de estilo) sobre un tema humano.", "Vender un producto usando la función poética y apelativa."],
+                correct: 2,
+                exp: "El ensayo aborda temas abstractos desde la reflexión subjetiva del autor, buscando persuadir y hacer pensar, con calidad literaria."
+            },
+            {
+                q: "¿Qué función del lenguaje de Jakobson es la que predomina absolutamente en un eslogan publicitario que te dice 'Compra ahora y descubre la magia'?",
+                options: ["Representativa y Fática", "Metalingüística", "Apelativa (o Conativa)", "Expresiva (o Emotiva)"],
+                correct: 2,
+                exp: "La función Apelativa se centra en el receptor, buscando influir en su comportamiento, dar una orden o convencerle."
+            },
+            {
+                q: "En el periodismo, si un reportero viaja a cubrir unas inundaciones, cuenta cronológicamente lo que ocurre, pero además incluye sus sentimientos y valoraciones de la tragedia que está presenciando, está escribiendo:",
+                options: ["Un Editorial", "Una Crónica", "Una Noticia pura", "Un Ensayo"],
+                correct: 1,
+                exp: "La crónica es un género mixto. Narra hechos objetivos y actuales pero a través de la lente subjetiva del periodista que estuvo allí."
+            },
+            {
+                q: "El 'Editorial' de un periódico es un texto sumamente importante porque...",
+                options: ["Lleva la firma del periodista más famoso del momento.", "Informa de manera totalmente neutral sin aportar valoraciones.", "No va firmado, ya que representa la opinión ideológica de toda la empresa periodística.", "Suele ser una entrevista ficticia o de humor."],
+                correct: 2,
+                exp: "El editorial marca la línea ideológica del medio de comunicación frente a un tema candente, por eso es voz institucional y no lleva firma personal."
+            },
+            {
+                q: "Un adolescente le envía un mensaje de WhatsApp a su profesor diciendo: 'Illo, ke pasa k no me as subido la nota del exámen loko'. Este texto tiene un fallo gravísimo de:",
+                options: ["Coherencia local", "Adecuación", "Cohesión gramatical", "Función Representativa"],
+                correct: 1,
+                exp: "Falla la adecuación porque utiliza un registro coloquial/vulgar (eje de solidaridad) en una relación de poder (eje vertical institucional) donde se exige registro formal."
+            },
+            {
+                q: "Cuando usamos la lengua para hablar del propio código de la lengua (por ejemplo, cuando en una clase de Lengua explicamos qué es un sintagma nominal), estamos usando la función:",
+                options: ["Metalingüística", "Poética", "Fática", "Referencial"],
+                correct: 0,
+                exp: "La función metalingüística ocurre cuando el lenguaje se toma a sí mismo como objeto de estudio."
+            },
+            {
+                q: "¿Cuál de estas características NO es propia de los textos digitales y el español en la Red?",
+                options: ["Multimodalidad (mezcla de texto, vídeo, audio).", "Hipertextualidad (uso de enlaces).", "Respeto estricto a la lentitud de la publicación impresa y evitación de neologismos.", "Economía del lenguaje e inmediatez."],
+                correct: 2,
+                exp: "La red se caracteriza precisamente por lo contrario: rapidez vertiginosa, actualización constante y uso masivo de neologismos y préstamos del inglés."
+            },
+            {
+                q: "Si en un texto argumentativo encontramos términos como 'democracia, libertad, moralidad, ética, consciencia', diremos que el texto utiliza mayoritariamente:",
+                options: ["Tecnicismos científicos univocos.", "Sustantivos abstractos, propios de los textos humanísticos.", "Deícticos espaciales.", "Anacolutos periodísticos."],
+                correct: 1,
+                exp: "La abstracción es la base de las humanidades y la filosofía, debatiendo sobre conceptos que no se pueden tocar físicamente."
+            }
+        ];
+
+        let currIndex = 0;
+        const qText = document.getElementById('quiz-question');
+        const qOptions = document.getElementById('quiz-options');
+        const qFeedback = document.getElementById('quiz-feedback');
+        const qNext = document.getElementById('quiz-next');
+        document.getElementById('q-total').innerText = quizData.length;
+
+        function renderQuiz() {
+            qFeedback.style.display = 'none';
+            qNext.style.display = 'none';
+            qOptions.innerHTML = '';
+            document.getElementById('q-curr').innerText = currIndex + 1;
+
+            const q = quizData[currIndex];
+            qText.innerText = q.q;
+
+            q.options.forEach((opt, index) => {
+                let btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkQuiz(index, btn);
+                qOptions.appendChild(btn);
+            });
+        }
+
+        function checkQuiz(selectedIndex, btn) {
+            const q = quizData[currIndex];
+            const buttons = qOptions.querySelectorAll('.option-btn');
+            
+            // Disable all
+            buttons.forEach(b => b.style.pointerEvents = 'none');
+
+            if(selectedIndex === q.correct) {
+                btn.classList.add('correct');
+                qFeedback.innerHTML = `<span style="color:var(--neon-green)">[CONEXIÓN ESTABLECIDA]</span> ${q.exp}`;
+                qFeedback.style.borderLeftColor = 'var(--neon-green)';
+            } else {
+                btn.classList.add('wrong');
+                buttons[q.correct].classList.add('correct');
+                qFeedback.innerHTML = `<span style="color:var(--neon-pink)">[ERROR DE PROTOCOLO]</span> ${q.exp}`;
+                qFeedback.style.borderLeftColor = 'var(--neon-pink)';
+            }
+            qFeedback.style.display = 'block';
+            qNext.style.display = 'block';
+        }
+
+        qNext.onclick = () => {
+            currIndex++;
+            if(currIndex < quizData.length) {
+                renderQuiz();
+            } else {
+                qText.innerText = "SISTEMA DESBLOQUEADO. Módulo C finalizado con éxito.";
+                qOptions.innerHTML = "";
+                qFeedback.style.display = 'none';
+                qNext.innerText = "REINICIAR SIMULACIÓN";
+                qNext.onclick = () => { currIndex = 0; renderQuiz(); qNext.innerText = "Siguiente Protocolo >"; };
+            }
+        };
+
+        // Inicializar
+        window.onload = () => {
+            initMatchGame();
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
